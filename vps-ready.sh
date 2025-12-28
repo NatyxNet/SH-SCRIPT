@@ -2,7 +2,6 @@
 apt update
 apt full-upgrade -y
 apt install sudo bash curl wget -y
-apt-get purge netplan.io --autoremove -y
 
 # ZSH Installation Script
 log() {
