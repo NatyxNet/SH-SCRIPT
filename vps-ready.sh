@@ -1,19 +1,8 @@
 #!/bin/bash
 apt update
 apt full-upgrade -y
-apt install resolvconf iptables sudo wireguard-tools bash curl wget -y
+apt install sudo bash curl wget -y
 apt-get purge netplan.io --autoremove -y
-cloud-init clean
-cloud-init init
-systemctl unmask networking
-systemctl enable networking resolvconf
-systemctl stop systemd-networkd.socket systemd-networkd systemd-networkd-wait-online
-systemctl disable systemd-networkd.socket systemd-networkd systemd-networkd-wait-online
-systemctl mask systemd-networkd.socket systemd-networkd systemd-networkd-wait-online
-rm -f /etc/resolv.conf
-ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
-systemctl start networking
-echo "VPS is ready. Rebooting..."
 
 # ZSH Installation Script
 log() {
@@ -83,7 +72,6 @@ fi
 # Add UTF-8 locale to .zshrc
 echo "[INFO] Exporting LANG and LC_ALL in .zshrc..."
 {
-    echo ""
     echo "# Set locale to UTF-8"
     echo "export LANG=en_US.UTF-8"
     echo "export LC_ALL=en_US.UTF-8"
@@ -99,5 +87,7 @@ fi
 
 log "OK" "Installation completed successfully"
 echo "Please log out and log back in to apply changes"
+
+echo "VPS is ready. Rebooting..."
 
 reboot
